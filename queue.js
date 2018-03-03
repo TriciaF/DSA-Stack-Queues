@@ -29,15 +29,32 @@ class Queue {
     }
 
     if (this.last !== null) {
-      console.log('enqueue the node: ', newNode.value);
       newNode.next = this.last;
       this.last.prev = newNode;
     }
     this.last = newNode;
   }
+
+  dequeue() {
+    if (this.first === null) {
+      console.log('list is emplty cannot dequeue');
+      return;
+    }
+
+    const node = this.first;
+    this.first = node.prev;
+    if (this.first === this.last)
+      this.last = null;
+
+    return node.value;
+  }
 }
 
 function peek(queue) {
+  if (queue.first === null) {
+    console.log('The queue is empty - no peek');
+    return;
+  }
   return queue.first.value;
 }
 
@@ -50,7 +67,6 @@ function display(queue) {
   let node = queue.first;
   let i = 1;
   while (node !== null) {
-    // console.log(node);
     console.log('Node: ', i, '= ', node.value);
     node = node.prev;
     i++;
@@ -67,6 +83,12 @@ function main() {
   starTrekQ.enqueue('Sulu');
   starTrekQ.enqueue('Checkov');
   display(starTrekQ);
+  console.log('---------------');
+  starTrekQ.dequeue();
+
+  display(starTrekQ);
+  console.log('---------------');
+  console.log(peek(starTrekQ));
 }
 
 main();
